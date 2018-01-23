@@ -1,8 +1,13 @@
-import { createStore } from 'redux';
-import { city } from '../reducers/city';
-const initialState = {
-    city: null
-};
+import { createStore, applyMiddleware, compose} from 'redux';
+import thunk from 'redux-thunk';
+import reducers from '../reducers';
 
-export const store = createStore(city, initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+const initialState = {
+    city: 'Buenos Aires,ar'
+};
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export const store = createStore(reducers, initialState, composeEnhancers(applyMiddleware(thunk)));
+
+// sin la devtools de redux
+// export const store = createStore(city, initialState, applyMiddleware(thunk));
